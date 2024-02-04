@@ -1,0 +1,83 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+
+  .background-image {
+    background-image: url('{{bgImage.url}}'); /* Set your background image */
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:10% ;
+    /* border: 1px solid black; */
+  }
+
+  .search-form {
+  background-color: rgba(255, 255, 255, 0.586); /* Semi-transparent white background */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow */
+}
+
+  .search-input {
+    width: calc(33.33% - 10px); /* Distribute inputs evenly in one line */
+    margin-right: 10px; /* Add margin between inputs */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .search-input:last-child {
+    margin-right: 0; /* Remove margin for the last input */
+  }
+
+  .search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff; /* Blue color for the button */
+    color: #ffffff; /* White text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="background-image">
+    <div class="search-form align-middle">
+      <form  method="POST" id="main_form">
+        {% csrf_token %}
+        <input type="text" class="searh-input" id="location" name="location" placeholder="Enter location" required>
+        <label for="checkin_date">Arrival</label>
+        <input type="date" class="search-input" name="checkin_date" required placeholder="Arrival" id="checkin_date" >
+        <label for="checkout_date"> Departure</label>
+        <input type="date" class="search-input" name="checkout_date" required placeholder="Departures" id="checkout_date">
+        <button type="submit" id="main_search_btn" class="search-button">Search</button>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
+
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+
+{% endblock javascripts %}
