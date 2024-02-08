@@ -30,8 +30,14 @@ def home(request):
 @login_required(login_url="/login/")
 def roomDetails(request,id):
     selectedRoom = Room.objects.get(id=id)
+    allImages = RoomImages.objects.filter(parent_room=selectedRoom)
+    all_comments =  selectedRoom.booking_details.all().values('comment','rating','customer_name')
+    print(all_comments, 'hello s')
+    print(allImages, 'hello sir')
     template = 'room/roomDetails.html'
     context = {
-        'selectedRoom':selectedRoom
+        'selectedRoom':selectedRoom,
+        'allImages':allImages,
+        'all_comments':all_comments
     }
     return render(request,template, context)

@@ -66,8 +66,8 @@
 .heart {
     color: #FF5733; /* Change color for filled hearts */
     display: inline-block;
-    width: 20px; /* Adjust width and height for heart size */
-    height: 20px;
+    width: 40px; /* Adjust width and height for heart size */
+    height: 40px;
 }
 
 /* Optional: Change color for empty hearts */
@@ -102,13 +102,16 @@
                 <div class="card-body">
                     <h5 class="card-title">{{rooms.parent_address.city}} ,{{rooms.parent_address.pincode}}</h5>
                     <h4 class="card-title"> From<span style="color: green;"> {{rooms.base_price}} {{rooms.price_currency}}</span> per night</h4>
+                    <div class="overall-rating">
+                      {% for i in ''|rjust:5 %}
+                      <span class="heart">&#9829;</span>
+                      {% endfor %}
+                      {% comment %}
+                      <span class="heart">&#9825;</span>
+                      {% endcomment %}
+                    </div>
                     
-                    {% for i in ''|rjust:5 %}
-                    <span class="heart">&#9829;</span>
-                    {% endfor %}
-                    {% comment %}
-                    <span class="heart">&#9825;</span>
-                    {% endcomment %}
+                    
                 </div>
         </a>
       </div>
