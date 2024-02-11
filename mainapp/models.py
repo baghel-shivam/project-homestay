@@ -52,6 +52,8 @@ class RoomImages(models.Model):
     order = models.IntegerField(blank=True, null=True, default=0)
     image_field = models.FileField(blank=True, null=True, upload_to= room_images_upload_path)
 
+
+
 class BookingDetail(models.Model):
     parent_room = models.ForeignKey(Room, on_delete=models.SET_NULL, blank=True,null=True,related_name='booking_details')
     parent_user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True,null=True,related_name='users_booking_details')
@@ -62,5 +64,8 @@ class BookingDetail(models.Model):
     is_coupon_applied = models.BooleanField(default=False, blank=True, null=True)
     cheked_in_date = models.DateTimeField(blank=True, null=True)
     cheked_out_date = models.DateTimeField(blank=True, null=True)
+    location = models.CharField(max_length=500, blank=True,null=True)
+    customer_phn = models.CharField(max_length=15, blank=True,null=True)
+    customer_email = models.EmailField(blank=True,null=True)
     
 
