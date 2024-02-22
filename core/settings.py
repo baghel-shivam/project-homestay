@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     'apps.home',  # Enable the inner home (home)
     'owner',
     'mainapp',
-    'user'
+    'user',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
