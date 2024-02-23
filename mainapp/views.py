@@ -73,8 +73,12 @@ class RoomSearchAPIView(APIView):
             (Q(parent_address__state__iexact=location) |
              Q(parent_address__city__iexact=location) |
              Q(parent_address__area__iexact=location)),
-            is_checked_in=False
+             ~(Q(cheked_in_date__gte=checkin_date) & Q(cheked_in_date__lte=checkout_date)),
+            ~(Q(cheked_out_date__gte=checkin_date) & Q(cheked_out_date__lte=checkout_date)),
+            is_checked_in=False,
+            
         )
+        
 
         serializer = RoomSerializer(available_rooms, many=True)
 
