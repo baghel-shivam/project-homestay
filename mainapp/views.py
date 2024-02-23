@@ -11,6 +11,12 @@ from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import RoomSerializer
 from datetime import datetime
+from django.contrib.auth.forms import UserCreationForm
+from user.models import User 
+from django.contrib.auth.admin import UserAdmin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic.edit import FormView
 
 
 '''
@@ -131,3 +137,23 @@ class BookingRequestApi(APIView):
         obj.save()
         return Response('Booking request created successfully', status=status.HTTP_201_CREATED)
 
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+
+class CustomCreateSuperuserView(FormView):
+    template_name = 'createsuperuser.html'
+    form_class = CustomUserCreationForm
+
+    def form_valid(self, form):
+        self.save_user(form)
+        return HttpResponse('User created')
+        # return super().form_valid(form)
+
+    def save_user(self, form):
+        user = form.save(commit=False)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
