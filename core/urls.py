@@ -14,3 +14,7 @@ urlpatterns = [
     path("", include("apps.home.urls")),          # UI Kits Html files
     path("", include("mainapp.urls")) 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+admin.site.site_title = "Homestay Admin"
+admin.site.site_header = "Homestay administration"
+admin.site.index_title = "Site administration"
