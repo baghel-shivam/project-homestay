@@ -81,10 +81,34 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': 'homestay-db',
+#         'HOST': 'project-homestay-db-server.database.windows.net',
+#         'DRIVER': 'SQL Server Native Client 11.0',
+#         'USER': 'admin_shivam',
+#         'PASSWORD': 'Varanasi@14',
+#         'PORT': '1433',
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#         },
+#     },
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        "ENGINE":"django.db.backends.postgresql",
+        'NAME': 'project-homestay-db',
+        'USER': 'admin_shivam',
+        'PASSWORD': 'Varanasi@1',
+        'HOST': 'project-homestay-db-server.postgres.database.azure.com',
+        'PORT': '5432',
     }
 }
 
