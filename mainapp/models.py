@@ -39,9 +39,18 @@ class Room(models.Model):
     category = models.CharField(max_length=100, choices= room_category, blank=True,null=True)
     base_price = models.IntegerField(blank=True, null=True)
     price_currency = models.CharField(choices=currency_opt, blank=True, null=True, max_length=50, default='INR')
-    is_couple_allowd = models.BooleanField(default=False, blank=True, null=True)
+    is_couple_allowed = models.BooleanField(default=False, blank=True, null=True)
     can_locals_stay = models.BooleanField(default=True, null=True, blank=True)
     should_coupon_applied = models.BooleanField(default=False, blank=True, null=True)
+    is_wifi_available = models.BooleanField(default=True)
+    is_tv_available = models.BooleanField(default=True)
+    is_ac_available = models.BooleanField(default=True)
+    is_parking_available = models.BooleanField(default=False)
+    is_housekeeping_available = models.BooleanField(default=True)
+    is_room_approved_for_listing = models.BooleanField(default=False)
+    is_recommended= models.BooleanField(default=False)
+    about_this_room = models.TextField(max_length=10000, blank=True, null=True)
+    
 
     def __str__(self):
         return self.site_name

@@ -61,7 +61,7 @@ def roomDetails(request,id):
 
 '''
 
-# A****************pi Work here ****************
+# ****************Api Work here ****************
 class RoomSearchAPIView(APIView):
     def post(self, request):
         location = request.data.get('location', '')
@@ -72,27 +72,25 @@ class RoomSearchAPIView(APIView):
         available_rooms = Room.objects.filter(
             (Q(parent_address__state__iexact=location) |
              Q(parent_address__city__iexact=location) |
+             Q(parent_address__pincode__iexact=location) |
              Q(parent_address__area__iexact=location)),
              ~(Q(cheked_in_date__gte=checkin_date) & Q(cheked_in_date__lte=checkout_date)),
             ~(Q(cheked_out_date__gte=checkin_date) & Q(cheked_out_date__lte=checkout_date)),
             is_checked_in=False,
             
         )
-        
-
         serializer = RoomSerializer(available_rooms, many=True)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
 class RoomDetailsAPIView(APIView):
-    # @login_required(login_url="/login/")
     def get(self, request, id):
         if not id:
             return Response('Bad Request, ID is required', status=status.HTTP_400_BAD_REQUEST)
         selected_room = get_object_or_404(Room, id=id)
         serializer = RoomSerializer(selected_room)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        data = serializer.data
+        data['img_array'] = selected_room.rooms_images.all().order_by('order').values('order','image_field')
+        return Response(data, status=status.HTTP_200_OK)
     
     def handle_exception(self, exc):
         if isinstance(exc, Http404):
@@ -141,6 +139,34 @@ class BookingRequestApi(APIView):
         obj.save()
         return Response('Booking request created successfully', status=status.HTTP_201_CREATED)
 
+class AddNewProperty(APIView):
+    def post(self,request):
+        #Create New Address
+        addressObj = Address()
+        addressObj.state = request.data.get('state', '')
+        addressObj.city = request.data.get('city', '')
+        addressObj.area = request.data.get('area', '')
+        addressObj.pincode = request.data.get('pincode', '')
+        addressObj.save()
+
+        roomObj = Room(parent_address=addressObj)
+        roomObj.site_name = request.data.get('site_name', '')
+        roomObj.full_addres = request.data.get('full_addres_one_line', '')
+        roomObj.front_img = request.data.get('front_img', '')
+        roomObj.category = request.data.get('category', '') #Choice field
+        roomObj.base_price = request.data.get('base_price', '')
+        roomObj.price_currency = request.data.get('price_currency', '') #Choice Field
+        roomObj.is_couple_allowed = request.data.get('is_couple_allowed', '')
+        roomObj.can_locals_stay = request.data.get('can_locals_stay', '')
+        roomObj.should_coupon_applied = request.data.get('should_coupon_applied', '')
+        roomObj.is_wifi_available = request.data.get('is_wifi_available', '')
+        roomObj.is_tv_available = request.data.get('is_tv_available', '')
+        roomObj.is_ac_available = request.data.get('is_ac_available', '')
+        roomObj.is_parking_available = request.data.get('is_parking_available', '')
+        roomObj.is_housekeeping_available = request.data.get('is_housekeeping_available', '')
+        roomObj.about_this_room = request.data.get('about_this_room', '')
+        roomObj.save()
+        return Response('Site listed successfully', status=status.HTTP_201_CREATED)
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -154,8 +180,6 @@ class CustomCreateSuperuserView(FormView):
     def form_valid(self, form):
         self.save_user(form)
         return HttpResponse('User created')
-        # return super().form_valid(form)
-
     def save_user(self, form):
         user = form.save(commit=False)
         user.is_staff = True
