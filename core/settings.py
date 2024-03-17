@@ -104,10 +104,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE":"django.db.backends.postgresql",
-        'NAME': 'project-homestay-db',
-        'USER': 'admin_shivam',
+        'NAME': 'postgres',
+        'USER': 'admin_db',
         'PASSWORD': 'Varanasi@1',
-        'HOST': 'project-homestay-db-server.postgres.database.azure.com',
+        'HOST': 'homestay-db.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
