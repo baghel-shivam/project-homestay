@@ -49,6 +49,12 @@ class Room(models.Model):
     is_housekeeping_available = models.BooleanField(default=True)
     is_room_approved_for_listing = models.BooleanField(default=False)
     is_recommended= models.BooleanField(default=False)
+    nearest_railway_station = models.CharField(blank=True, null=True, max_length=200)
+    distance_from_rs = models.IntegerField(null=True,blank=True, verbose_name= 'Distance from nearest railway station (km)')
+    nearest_metro_station = models.CharField(blank=True, null=True, max_length=200)
+    distance_from_ms = models.IntegerField(null=True,blank=True, verbose_name= 'Distance from nearest metro station (km)')
+    nearest_airport = models.CharField(blank=True, null=True, max_length=200)
+    distance_from_ap = models.IntegerField(null=True,blank=True, verbose_name= 'Distance from nearest Air Port (km)')
     about_this_room = models.TextField(max_length=10000, blank=True, null=True)
     
 
