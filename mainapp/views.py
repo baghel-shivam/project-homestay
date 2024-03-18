@@ -79,8 +79,13 @@ class RoomSearchAPIView(APIView):
             is_checked_in=False,
             
         )
-        serializer = RoomSerializer(available_rooms, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        data_array = []
+        for room_data in available_rooms:
+            serialized_data = RoomSerializer(room_data)
+            data_dict = serialized_data.data
+            data_dict['img_array'] = room_data.rooms_images.all().order_by('order').values('order','image_field')
+            data_array.append(data_dict)
+        return Response(data_array, status=status.HTTP_200_OK)
 
 class RoomDetailsAPIView(APIView):
     def get(self, request, id):
