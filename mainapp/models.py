@@ -76,5 +76,7 @@ class BookingDetail(models.Model):
     location = models.CharField(max_length=500, blank=True,null=True)
     customer_phn = models.CharField(max_length=15, blank=True,null=True)
     customer_email = models.EmailField(blank=True,null=True)
-    
+    is_booking_approved = models.BooleanField(default=False)
+    def __str__(self):
+        return self.customer_name if self.customer_name else self.id
 
