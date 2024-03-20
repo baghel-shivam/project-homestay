@@ -56,7 +56,10 @@ class Room(models.Model):
     nearest_airport = models.CharField(blank=True, null=True, max_length=200)
     distance_from_ap = models.IntegerField(null=True,blank=True, verbose_name= 'Distance from nearest Air Port (km)')
     about_this_room = models.TextField(max_length=10000, blank=True, null=True)
-    
+    contact_person = models.CharField(max_length=200, blank=True, null=True)
+    contact_email = models.CharField(max_length=300, blank=True, null=True)
+    contact_phn = models.CharField(max_length=15, blank=True, null=True)
+    how_to_reach =  models.TextField(blank=True, null=True, max_length=5000)
 
     def __str__(self):
         return self.site_name

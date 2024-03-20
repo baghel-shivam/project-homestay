@@ -41,10 +41,6 @@ def home(request):
     template = 'home/mainHome.html'
     return render(request,template)
 
-    
-
-
-
 
 @login_required(login_url="/login/")
 def roomDetails(request,id):
@@ -76,8 +72,7 @@ class RoomSearchAPIView(APIView):
              Q(parent_address__area__iexact=location)),
              ~(Q(cheked_in_date__gte=checkin_date) & Q(cheked_in_date__lte=checkout_date)),
             ~(Q(cheked_out_date__gte=checkin_date) & Q(cheked_out_date__lte=checkout_date)),
-            is_checked_in=False,
-            
+            is_checked_in=False,is_room_approved_for_listing=True
         )
         data_array = []
         for room_data in available_rooms:
@@ -124,23 +119,24 @@ class BookingRequestApi(APIView):
         
         try:
             parent_user = User.objects.get(id=parent_user_id)
-        except User.DoesNotExist:
-            return Response('Bad Request, user not found', status=status.HTTP_400_BAD_REQUEST)
-
+        except:
+            parent_user = False
+        try:
+            paretn_room = Room.objects.get(id=parentroom_id)
+        except:
+            return Response('Bad Request, Room not found', status=status.HTTP_400_BAD_REQUEST)
         obj = BookingDetail()
-        obj.parent_room_id = int(parentroom_id)
-        obj.parent_user = parent_user
+        obj.parent_room_id = parentroom_id
+        if parent_user:
+            obj.parent_user = parent_user
         obj.customer_name = customer_name
         obj.booking_price = booking_price
-        
-
         obj.cheked_in_date = checked_in_date
         obj.cheked_out_date = checked_out_date
         obj.location = request_location
         obj.customer_phn = customer_phn
         if customer_email:
             obj.customer_email = customer_email
-        
         obj.save()
         return Response('Booking request created successfully', status=status.HTTP_201_CREATED)
 
