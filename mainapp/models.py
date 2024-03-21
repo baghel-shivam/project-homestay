@@ -60,7 +60,8 @@ class Room(models.Model):
     contact_email = models.CharField(max_length=300, blank=True, null=True)
     contact_phn = models.CharField(max_length=15, blank=True, null=True)
     how_to_reach =  models.TextField(blank=True, null=True, max_length=5000)
-
+    nearest_attraction_1 = models.CharField(max_length=500, blank=True, null=True)
+    nearest_attraction_2 = models.CharField(max_length=500, blank=True, null=True)
     def __str__(self):
         return self.site_name
 
@@ -73,6 +74,7 @@ class RoomImages(models.Model):
 
 
 class BookingDetail(models.Model):
+    booking_id = models.CharField(blank=True, null=True, max_length=400)
     parent_room = models.ForeignKey(Room, on_delete=models.SET_NULL, blank=True,null=True,related_name='booking_details')
     parent_user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True,null=True,related_name='users_booking_details')
     customer_name = models.CharField(max_length=200, blank=True, null=True)

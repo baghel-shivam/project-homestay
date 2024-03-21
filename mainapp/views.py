@@ -166,6 +166,12 @@ class AddNewProperty(APIView):
         roomObj.is_parking_available = request.data.get('is_parking_available', '')
         roomObj.is_housekeeping_available = request.data.get('is_housekeeping_available', '')
         roomObj.about_this_room = request.data.get('about_this_room', '')
+        roomObj.contact_person = request.data.get('contact_person', '')
+        roomObj.contact_email = request.data.get('contact_email', '')
+        roomObj.contact_phn = request.data.get('contact_phn', '')
+        roomObj.how_to_reach = request.data.get('how_to_reach', '')
+        roomObj.nearest_attraction_1 = request.data.get('nearest_attraction_1', '')
+        roomObj.nearest_attraction_2 = request.data.get('nearest_attraction_2', '')
         roomObj.save()
         return Response('Site listed successfully', status=status.HTTP_201_CREATED)
 
