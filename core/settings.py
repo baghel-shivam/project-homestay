@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.home',  # Enable the inner home (home)
     'owner',
     'mainapp',
     'user',
@@ -162,3 +161,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #############################################################
 #############################################################
+
+# Azure Blob Storage settings
+AZURE_ACCOUNT_NAME = 'homestaystorageblob'
+AZURE_ACCOUNT_KEY = 'homestaystorageblob'
+AZURE_CONTAINER = 'blobdata'
+
+DEFAULT_FILE_STORAGE = 'core.azure_storage.AzureMediaStorage'
